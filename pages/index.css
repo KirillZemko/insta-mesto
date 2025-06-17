@@ -39,3 +39,4 @@
 @import url(../blocks/form/__input/_name/form__input_el_name.css);
 @import url(../blocks/form/__input/_description/form__input_el_description.css);
 @import url(../blocks/btn/_save/btn_type_save.css);
+@import url(../blocks/popup/__close-icon/form__close-icon.css);

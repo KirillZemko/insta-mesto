@@ -1,3 +1,9 @@
 .btn_type_save {
   margin-top: 48px;
+  background-color: #000000;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  min-height: 50px;
+  cursor: pointer;
 }
