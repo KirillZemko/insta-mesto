@@ -1,0 +1,4 @@
+.btn_hover_effect:hover {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 60%;
+}

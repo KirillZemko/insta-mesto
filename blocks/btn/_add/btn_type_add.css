@@ -7,7 +7,8 @@
   cursor: pointer;
 }
 
-.btn_type_add:hover {
-  transition: opacity 0.2s ease-in-out;
-  opacity: 60%;
+@media screen and (min-width: 320px) and (max-width: 419px) {
+  .btn_type_add {
+    width: 100%;
+  }
 }

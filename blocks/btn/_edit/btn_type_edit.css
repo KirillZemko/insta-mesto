@@ -6,8 +6,3 @@
   min-height: 24px;
   cursor: pointer;
 }
-
-.btn_type_edit:hover {
-  transition: opacity 0.2s ease-in-out;
-  opacity: 60%;
-}

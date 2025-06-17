@@ -7,3 +7,10 @@
   text-align: left;
   margin-top: 16px;
 }
+
+@media screen and (min-width: 320px) and (max-width: 419px) {
+  .profile__description {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+}
