@@ -7,6 +7,7 @@ let popupCloseBtn = document.querySelector('.popup__close-icon');
 let formElement = document.querySelector('.form__input-container');
 let nameInput = formElement.querySelector('.form__input_el_name');
 let jobInput = formElement.querySelector('.form__input_el_description');
+let likeButtons = document.querySelectorAll('.btn_type_like');
 
 function handleFormSubmit() {
   // evt.preventDefault();
@@ -26,6 +27,13 @@ editBtn.addEventListener('click', function() {
 
 popupCloseBtn.addEventListener('click', function closePopup() {
   popup.classList.toggle('popup_opened');
+});
+
+likeButtons.forEach(function(button) {
+  button.addEventListener('click', function() {
+    console.log('like');
+    button.classList.toggle('btn_type_like-active');
+  });
 });
 
 formElement.addEventListener('submit', handleFormSubmit);
