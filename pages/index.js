@@ -29,6 +29,7 @@ const initialCards = [
 let profileName = document.querySelector('.profile__name');
 let profileDescription = document.querySelector('.profile__description');
 let editBtn = document.querySelector('.btn_type_edit');
+let addCardBtn = document.querySelector('.btn_type_add');
 let btnSubmit = document.querySelector('.btn_type_save');
 let popup = document.querySelector('.popup');
 let popupCloseBtn = document.querySelector('.popup__close-icon');
@@ -36,9 +37,16 @@ let formElement = document.querySelector('.form__input-container');
 let nameInput = formElement.querySelector('.form__input_el_name');
 let jobInput = formElement.querySelector('.form__input_el_description');
 let likeButtons = document.querySelectorAll('.btn_type_like');
+// переменные addCardPopup
+let addCardPopup = document.querySelector('.popup_type_add-card');
+let formAddCardPopup = document.querySelector('.form_type_add-card');
+let cardNameInput = document.querySelector('.form__input_el_card-name');
+let cardLinkInput = document.querySelector('.form__input_el_card-link');
+let addCardPopupCreateBtn = document.querySelector('.btn_type_create');
+let addCardPopupCloseBtn = document.querySelector('.popup-add-card-close-btn');
 
 let cardsContainer = document.querySelector('.cards'); // переменная для контейнера карточек
-// переменные шаблона card-template
+// переменная для карточек шаблона card-template
 const cardTemplate = document.querySelector('#card-template').content; // Добавляем .content для доступа к содержимому шаблона
 
 // функция создания карточки, принимает объект карточки cardData и возвращает карточку с картинкой и текстом
@@ -55,19 +63,37 @@ function createCard(cardData) {
 }
 
 // отрисовка начальных карточек на странице
-initialCards.forEach(function(cardData) {
-  const card = createCard(cardData);
+initialCards.forEach(cardData => {
+  const card = createCard(cardData); // вызываем функцию создания карточки
+
   cardsContainer.append(card);
 });
 
-function handleFormSubmit(evt) {
-  console.log('Функция handleFormSubmit вызвана!');
-
+// добавление карточки и закрытия окна добавления карточки
+function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
 
-  console.log('click');
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true); // клонируем элемент
+  const cardImage = cardElement.querySelector('.card__image');
+  const cardTitle = cardElement.querySelector('.card__title');
 
-  profileName.textContent = nameInput.value.toUpperCase().slice(0, 1) + nameInput.value.slice(1);
+  cardImage.src = cardLinkInput.value;
+  cardImage.alt = cardNameInput.value;
+  cardTitle.textContent = cardNameInput.value.toUpperCase().slice(0, 1) + cardNameInput.value.slice(1);
+
+  cardsContainer.prepend(cardElement);
+
+  cardNameInput.value = '';
+  cardLinkInput.value = '';
+
+  addCardPopup.classList.toggle('popup_opened');
+}
+
+// функция добавления имени и профессии
+function handleFormSubmit(evt) {
+  evt.preventDefault();
+
+  profileName.textContent = nameInput.value.toUpperCase().slice(0, 1) + nameInput.value.slice(1); // первая имени всегда заглавная
   profileDescription.textContent = jobInput.value;
 
   popup.classList.toggle('popup_opened');
@@ -80,17 +106,14 @@ function editPopup() {
   popup.classList.toggle('popup_opened');
 }
 
-function closePopup() {
-  popup.classList.toggle('popup_opened');
+// открытие попапа добавления карточки
+function openAddCardPopup() {
+  addCardPopup.classList.toggle('popup_opened');
 }
 
-likeButtons.forEach(function(button) {
-  button.addEventListener('click', function() {
-    console.log('like');
-    button.classList.toggle('btn_type_like-active');
-  });
-});
-
 editBtn.addEventListener('click', editPopup);
-popupCloseBtn.addEventListener('click', closePopup);
+addCardBtn.addEventListener('click', openAddCardPopup)
+popupCloseBtn.addEventListener('click', () =>  popup.classList.toggle('popup_opened')); // закрытие popup
+addCardPopupCloseBtn.addEventListener('click', () =>  addCardPopup.classList.toggle('popup_opened')); // закрытие addCardPopup
 formElement.addEventListener('submit', handleFormSubmit);
+formAddCardPopup.addEventListener('submit', handleAddCardFormSubmit);
