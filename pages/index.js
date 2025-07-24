@@ -54,13 +54,15 @@ function createCard(cardData) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true); // клонируем элемент
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
-  const likeBtn = cardElement.querySelector('.btn_type_like');
 
   cardImage.src = cardData.link; // устанавливаем ссылку на картинку
   cardImage.alt = cardData.name; // устанавливаем альт-текст
   cardTitle.textContent = cardData.name; // устанавливаем заголовок
 
-  toggleLikeBtn();
+  // обработчик события кнопки like
+  cardElement.querySelector('.btn_type_like').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('btn_type_like-active');
+  })
 
   return cardElement; // возвращаем карточку
 }
@@ -79,11 +81,16 @@ function handleAddCardFormSubmit(evt) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true); // клонируем элемент
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
-  const likeBtn = cardElement.querySelector('.btn_type_like');
+  // const likeBtn = cardElement.querySelector('.btn_type_like');
 
   cardImage.src = cardLinkInput.value;
   cardImage.alt = cardNameInput.value;
   cardTitle.textContent = cardNameInput.value.toUpperCase().slice(0, 1) + cardNameInput.value.slice(1);
+
+  // обработчик события кнопки like
+  cardElement.querySelector('.btn_type_like').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('btn_type_like-active');
+  })
 
   cardsContainer.prepend(cardElement);
 
@@ -91,22 +98,20 @@ function handleAddCardFormSubmit(evt) {
   cardLinkInput.value = '';
 
   addCardPopup.classList.toggle('popup_opened');
-
-  toggleLikeBtn();
 }
 
 // функция лайка
-function toggleLikeBtn() {
-  const likeBtns = document.querySelectorAll('.btn_type_like');
+// function toggleLikeBtn() {
+//   const likeBtns = document.querySelectorAll('.btn_type_like');
 
-  likeBtns.forEach(btn => {
-    btn.addEventListener('click', function (evt) {
-      console.log('Like button click');
+//   likeBtns.forEach(btn => {
+//     btn.addEventListener('click', function (evt) {
+//       console.log('Like button click');
 
-      evt.target.classList.toggle('btn_type_like-active');
-    });
-  });
-}
+//       evt.target.classList.toggle('btn_type_like-active');
+//     });
+//   });
+// }
 
 // функция добавления имени и профессии
 function handleFormSubmit(evt) {
