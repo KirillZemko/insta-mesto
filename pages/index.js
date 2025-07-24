@@ -59,12 +59,14 @@ function createCard(cardData) {
   return cardElement; // возвращаем карточку
 }
 
-// отрисовка начальных карточек на странице
-initialCards.forEach(cardData => {
-  const card = createCard(cardData); // вызываем функцию создания карточки
+// функция отрисовки карточек из массива initial-cards
+function renderCards(cards) {
+  cards.forEach(card => {
+    const cardElement = createCard(card);
 
-  cardsContainer.append(card);
-});
+    cardsContainer.append(cardElement);
+  });
+}
 
 // добавление карточки и закрытия окна добавления карточки
 function handleAddCardFormSubmit(evt) {
@@ -110,6 +112,8 @@ function showCardImage(evt) {
 
   togglePopup(previewPopup);
 }
+
+renderCards(initialCards);
 
 // обработчики событий кнопок popup
 editBtn.addEventListener('click', function () {

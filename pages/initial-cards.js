@@ -22,5 +22,9 @@ const initialCards = [
   {
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  },
+  {
+    name: 'Nespresso',
+    link: 'https://static.insales-cdn.com/images/articles/1/2757/7555781/large_tg_image_3512937679.png'
   }
 ];
