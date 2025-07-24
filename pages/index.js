@@ -64,6 +64,11 @@ function createCard(cardData) {
     evt.target.classList.toggle('btn_type_like-active');
   })
 
+  // обработчик события кнопки delete
+  cardElement.querySelector('.btn_type_delete').addEventListener('click', function() {
+    cardElement.remove();
+  })
+
   return cardElement; // возвращаем карточку
 }
 
@@ -81,7 +86,6 @@ function handleAddCardFormSubmit(evt) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true); // клонируем элемент
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
-  // const likeBtn = cardElement.querySelector('.btn_type_like');
 
   cardImage.src = cardLinkInput.value;
   cardImage.alt = cardNameInput.value;
@@ -92,6 +96,11 @@ function handleAddCardFormSubmit(evt) {
     evt.target.classList.toggle('btn_type_like-active');
   })
 
+  // обработчик события кнопки delete
+  cardElement.querySelector('.btn_type_delete').addEventListener('click', function() {
+    cardElement.remove();
+  })
+
   cardsContainer.prepend(cardElement);
 
   cardNameInput.value = '';
@@ -99,19 +108,6 @@ function handleAddCardFormSubmit(evt) {
 
   addCardPopup.classList.toggle('popup_opened');
 }
-
-// функция лайка
-// function toggleLikeBtn() {
-//   const likeBtns = document.querySelectorAll('.btn_type_like');
-
-//   likeBtns.forEach(btn => {
-//     btn.addEventListener('click', function (evt) {
-//       console.log('Like button click');
-
-//       evt.target.classList.toggle('btn_type_like-active');
-//     });
-//   });
-// }
 
 // функция добавления имени и профессии
 function handleFormSubmit(evt) {
