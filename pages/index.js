@@ -2,12 +2,13 @@ const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const editBtn = document.querySelector('.btn_type_edit');
 const addCardBtn = document.querySelector('.btn_type_add');
+// переменные editPopup
 const btnSubmit = document.querySelector('.btn_type_save');
-const popup = document.querySelector('.popup');
+const editProfilePopup = document.querySelector('.popup');
 const popupCloseBtn = document.querySelector('.popup__close-icon');
-const formElement = document.querySelector('.form__input-container');
-const nameInput = formElement.querySelector('.form__input_el_name');
-const jobInput = formElement.querySelector('.form__input_el_description');
+const formEditPopup = document.querySelector('.form__input-container');
+const nameInput = formEditPopup.querySelector('.form__input_el_name');
+const jobInput = formEditPopup.querySelector('.form__input_el_description');
 // переменные addCardPopup
 const addCardPopup = document.querySelector('.popup_type_add-card');
 const formAddCardPopup = document.querySelector('.form_type_add-card');
@@ -27,7 +28,7 @@ const previewPopupCloswBtn = document.querySelector('.popup-preview-close-btn');
 // функция toggle popup
 function togglePopup(selectedPopup) {
   selectedPopup.classList.toggle('popup_opened');
-}
+};
 
 // функция добавления обработчиков событий на кнопки like и delete
 function setEventListeners(cardElement) {
@@ -94,7 +95,7 @@ function handleFormSubmit(evt) {
   profileName.textContent = nameInput.value.toUpperCase().slice(0, 1) + nameInput.value.slice(1); // первая имени всегда заглавная
   profileDescription.textContent = jobInput.value;
 
-  togglePopup(popup);
+  togglePopup(editProfilePopup);
 }
 
 // функция showCardImage
@@ -115,13 +116,15 @@ editBtn.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
 
-  togglePopup(popup);
+  togglePopup(editProfilePopup);
 });
 popupCloseBtn.addEventListener('click', () => togglePopup(popup));
-formElement.addEventListener('submit', handleFormSubmit);
+formEditPopup.addEventListener('submit', handleFormSubmit);
 
 // обработчики событий кнопок addCardPopup
-addCardBtn.addEventListener('click', () => togglePopup(addCardPopup));
+addCardBtn.addEventListener('click', function () {
+  togglePopup(addCardPopup);
+});
 addCardPopupCloseBtn.addEventListener('click', () => togglePopup(addCardPopup));
 formAddCardPopup.addEventListener('submit', handleAddCardFormSubmit);
 
