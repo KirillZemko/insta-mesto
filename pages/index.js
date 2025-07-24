@@ -36,7 +36,6 @@ let popupCloseBtn = document.querySelector('.popup__close-icon');
 let formElement = document.querySelector('.form__input-container');
 let nameInput = formElement.querySelector('.form__input_el_name');
 let jobInput = formElement.querySelector('.form__input_el_description');
-// let likeButtons = document.querySelectorAll('.btn_type_like');
 // переменные addCardPopup
 let addCardPopup = document.querySelector('.popup_type_add-card');
 let formAddCardPopup = document.querySelector('.form_type_add-card');
@@ -58,6 +57,19 @@ function togglePopup(selectedPopup) {
   selectedPopup.classList.toggle('popup_opened');
 }
 
+// функция добавления обработчиков событий на кнопки like и delete
+function setEventListeners(cardElement) {
+  // обработчик события кнопки like
+  cardElement.querySelector('.btn_type_like').addEventListener('click', function(evt) {
+    evt.target.classList.toggle('btn_type_like-active');
+  })
+
+  // обработчик события кнопки delete
+  cardElement.querySelector('.btn_type_delete').addEventListener('click', function() {
+    cardElement.remove();
+  })
+}
+
 // функция создания карточки, принимает объект карточки cardData и возвращает карточку с картинкой и текстом
 function createCard(cardData) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true); // клонируем элемент
@@ -68,16 +80,7 @@ function createCard(cardData) {
   cardImage.alt = cardData.name; // устанавливаем альт-текст
   cardTitle.textContent = cardData.name; // устанавливаем заголовок
 
-  // обработчик события кнопки like
-  cardElement.querySelector('.btn_type_like').addEventListener('click', function(evt) {
-    evt.target.classList.toggle('btn_type_like-active');
-  })
-
-  // обработчик события кнопки delete
-  cardElement.querySelector('.btn_type_delete').addEventListener('click', function() {
-    cardElement.remove();
-  })
-
+  setEventListeners(cardElement);
   cardImage.addEventListener('click', showCardImage);
 
   return cardElement; // возвращаем карточку
@@ -102,22 +105,14 @@ function handleAddCardFormSubmit(evt) {
   cardImage.alt = cardNameInput.value;
   cardTitle.textContent = cardNameInput.value.toUpperCase().slice(0, 1) + cardNameInput.value.slice(1);
 
-  // обработчик события кнопки like
-  cardElement.querySelector('.btn_type_like').addEventListener('click', function(evt) {
-    evt.target.classList.toggle('btn_type_like-active');
-  })
-
-  // обработчик события кнопки delete
-  cardElement.querySelector('.btn_type_delete').addEventListener('click', function() {
-    cardElement.remove();
-  })
-
-  cardsContainer.prepend(cardElement);
-
   cardNameInput.value = '';
   cardLinkInput.value = '';
 
+  setEventListeners(cardElement);
+  cardsContainer.prepend(cardElement);
   togglePopup(addCardPopup);
+
+  cardImage.addEventListener('click', showCardImage);
 }
 
 // функция добавления имени и профессии
@@ -133,7 +128,6 @@ function handleFormSubmit(evt) {
 // функция showCardImage
 function showCardImage(evt) {
   evt.preventDefault();
-  console.log('image card CLICK');
 
   const closestImage = evt.target.closest('.card__image');
 
