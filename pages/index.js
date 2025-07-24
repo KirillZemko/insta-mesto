@@ -44,10 +44,19 @@ let cardNameInput = document.querySelector('.form__input_el_card-name');
 let cardLinkInput = document.querySelector('.form__input_el_card-link');
 let addCardPopupCreateBtn = document.querySelector('.btn_type_create');
 let addCardPopupCloseBtn = document.querySelector('.popup-add-card-close-btn');
-
 let cardsContainer = document.querySelector('.cards'); // переменная для контейнера карточек
-// переменная для карточек шаблона card-template
 const cardTemplate = document.querySelector('#card-template').content; // Добавляем .content для доступа к содержимому шаблона
+// переменные popup_type_preview
+const previewPopup = document.querySelector('.popup_type_preview');
+const previewImage = document.querySelector('.popup__image-preview');
+const previewDescription = document.querySelector('.popup__description');
+const cardImage = document.querySelector('.card__image');
+const previewPopupCloswBtn = document.querySelector('.popup-preview-close-btn');
+
+// функция toggle popup
+function togglePopup(selectedPopup) {
+  selectedPopup.classList.toggle('popup_opened');
+}
 
 // функция создания карточки, принимает объект карточки cardData и возвращает карточку с картинкой и текстом
 function createCard(cardData) {
@@ -68,6 +77,8 @@ function createCard(cardData) {
   cardElement.querySelector('.btn_type_delete').addEventListener('click', function() {
     cardElement.remove();
   })
+
+  cardImage.addEventListener('click', showCardImage);
 
   return cardElement; // возвращаем карточку
 }
@@ -106,7 +117,7 @@ function handleAddCardFormSubmit(evt) {
   cardNameInput.value = '';
   cardLinkInput.value = '';
 
-  addCardPopup.classList.toggle('popup_opened');
+  togglePopup(addCardPopup);
 }
 
 // функция добавления имени и профессии
@@ -116,24 +127,37 @@ function handleFormSubmit(evt) {
   profileName.textContent = nameInput.value.toUpperCase().slice(0, 1) + nameInput.value.slice(1); // первая имени всегда заглавная
   profileDescription.textContent = jobInput.value;
 
-  popup.classList.toggle('popup_opened');
+  togglePopup(popup);
 }
 
-function editPopup() {
+// функция showCardImage
+function showCardImage(evt) {
+  evt.preventDefault();
+  console.log('image card CLICK');
+
+  const closestImage = evt.target.closest('.card__image');
+
+  previewImage.src = closestImage.src;
+  previewImage.alt = closestImage.alt;
+  previewDescription.textContent = closestImage.alt;
+
+  togglePopup(previewPopup);
+}
+
+// обработчики событий кнопок popup
+editBtn.addEventListener('click', function () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
 
-  popup.classList.toggle('popup_opened');
-}
-
-// открытие попапа добавления карточки
-function openAddCardPopup() {
-  addCardPopup.classList.toggle('popup_opened');
-}
-
-editBtn.addEventListener('click', editPopup);
-addCardBtn.addEventListener('click', openAddCardPopup)
-popupCloseBtn.addEventListener('click', () =>  popup.classList.toggle('popup_opened')); // закрытие popup
-addCardPopupCloseBtn.addEventListener('click', () =>  addCardPopup.classList.toggle('popup_opened')); // закрытие addCardPopup
+  togglePopup(popup);
+});
+popupCloseBtn.addEventListener('click', () => togglePopup(popup));
 formElement.addEventListener('submit', handleFormSubmit);
+
+// обработчики событий кнопок addCardPopup
+addCardBtn.addEventListener('click', () => togglePopup(addCardPopup));
+addCardPopupCloseBtn.addEventListener('click', () => togglePopup(addCardPopup));
 formAddCardPopup.addEventListener('submit', handleAddCardFormSubmit);
+
+// обработчик событий previewPopup
+previewPopupCloswBtn.addEventListener('click', () => togglePopup(previewPopup));
